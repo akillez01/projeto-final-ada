@@ -4,14 +4,16 @@ resource "aws_iam_role" "lambda_role" {
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
-    Statement = [{
-      Action    = "sts:AssumeRole"
-      Principal = {
-        Service = "lambda.amazonaws.com"
+    Statement = [
+      {
+        Action    = "sts:AssumeRole"
+        Principal = {
+          Service = "lambda.amazonaws.com"
+        }
+        Effect    = "Allow"
+        Sid       = ""
       }
-      Effect    = "Allow"
-      Sid       = ""
-    }]
+    ]
   })
 }
 
@@ -24,8 +26,8 @@ resource "aws_iam_role_policy" "lambda_policy" {
     Version = "2012-10-17"
     Statement = [
       {
+        # Permissões para acessar o bucket S3 e os objetos dentro dele
         Action = ["s3:GetObject", "s3:ListBucket"]
-        # Recursos de acesso ao S3 (bucket e objetos dentro dele)
         Resource = [
           aws_s3_bucket.file_bucket.arn,                # Acesso ao bucket
           "${aws_s3_bucket.file_bucket.arn}/*"          # Acesso aos objetos dentro do bucket
@@ -33,21 +35,31 @@ resource "aws_iam_role_policy" "lambda_policy" {
         Effect = "Allow"
       },
       {
-        Action = "sqs:ReceiveMessage"
-        # Permissão para acessar a fila SQS
+        # Permissões para acessar a fila SQS
+        Action = ["sqs:ReceiveMessage", "sqs:DeleteMessage", "sqs:GetQueueAttributes"]
         Resource = aws_sqs_queue.file_processing_queue.arn
         Effect = "Allow"
       },
       {
+        # Permissões para publicar mensagens no SNS
         Action = "sns:Publish"
-        # Permissão para publicar mensagens no SNS
         Resource = aws_sns_topic.file_uploaded_topic.arn
         Effect = "Allow"
       },
       {
+        # Permissões para acessar a tabela DynamoDB
         Action = ["dynamodb:PutItem", "dynamodb:GetItem", "dynamodb:UpdateItem"]
-        # Permissão para acessar a tabela DynamoDB
         Resource = aws_dynamodb_table.file_metadata_table.arn
+        Effect = "Allow"
+      },
+      {
+        # Permissões básicas para executar a Lambda
+        Action = [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ]
+        Resource = "arn:aws:logs:*:*:*"
         Effect = "Allow"
       }
     ]

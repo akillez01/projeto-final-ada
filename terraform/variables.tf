@@ -15,7 +15,7 @@ variable "aws_secret_key" {
 variable "bucket_name" {
   description = "Nome do bucket S3"
   type        = string
-  default     = "ada-contabilidade-file-storage"
+  default     = "ada-contabilidade-storage"
 }
 
 # Variáveis para outros recursos
