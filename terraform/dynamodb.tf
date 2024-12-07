@@ -7,4 +7,8 @@ resource "aws_dynamodb_table" "file_metadata_table" {
     name = "file_id"
     type = "S"
   }
+
+  lifecycle {
+    ignore_changes = [name]
+  }
 }
