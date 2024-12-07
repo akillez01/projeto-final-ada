@@ -39,11 +39,10 @@ variable "db_adacontab" {
 variable "db_username" {
   description = "Usuário do banco de dados RDS"
   type        = string
-  default     = "admin"
 }
 
 variable "db_password" {
   description = "Senha do banco de dados RDS"
   type        = string
-  default     = "password"
+  sensitive   = true
 }
