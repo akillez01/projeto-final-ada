@@ -5,5 +5,5 @@ def handler(event, context):
     # Seu código aqui
     return {
         'statusCode': 200,
-        'body': json.dumps('Hello from Lambda!')
+        'body': json.dumps('Hello Lambda!')
     }
