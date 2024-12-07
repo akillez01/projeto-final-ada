@@ -15,6 +15,11 @@ resource "aws_iam_role" "lambda_role" {
       }
     ]
   })
+
+  lifecycle {
+    create_before_destroy = true
+    ignore_changes = [name]
+  }
 }
 
 # Política associada ao Role da Lambda
