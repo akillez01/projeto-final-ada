@@ -1,5 +1,9 @@
 resource "aws_s3_bucket" "file_bucket" {
   bucket = var.bucket_name
+
+  lifecycle {
+    ignore_changes = [bucket]
+  }
 }
 
 resource "aws_s3_bucket_lifecycle_configuration" "file_bucket_lifecycle" {
