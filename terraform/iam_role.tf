@@ -43,6 +43,12 @@ resource "aws_iam_role_policy" "lambda_policy" {
         # Permissão para publicar mensagens no SNS
         Resource = aws_sns_topic.file_uploaded_topic.arn
         Effect = "Allow"
+      },
+      {
+        Action = ["dynamodb:PutItem", "dynamodb:GetItem", "dynamodb:UpdateItem"]
+        # Permissão para acessar a tabela DynamoDB
+        Resource = aws_dynamodb_table.file_metadata_table.arn
+        Effect = "Allow"
       }
     ]
   })

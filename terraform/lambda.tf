@@ -5,4 +5,6 @@ resource "aws_lambda_function" "file_processor" {
   handler       = "index.handler"
   runtime       = "python3.8"
   role          = aws_iam_role.lambda_role.arn
+
+  depends_on = [aws_s3_object.lambda_code]
 }

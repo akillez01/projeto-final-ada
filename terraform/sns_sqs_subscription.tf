@@ -11,3 +11,13 @@ resource "aws_sns_topic_subscription" "email_subscription" {
   protocol  = "email"
   endpoint  = "achilles.oliveira.souza@gmail.com"
 }
+
+# SNS Topic
+# resource "aws_sns_topic" "file_uploaded_topic" {
+#   name = "file-uploaded-topic"
+# }
+
+# SQS Queue
+# resource "aws_sqs_queue" "file_processing_queue" {
+#   name = "file-processing-queue"
+# }
