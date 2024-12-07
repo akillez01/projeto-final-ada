@@ -1,10 +1,13 @@
 resource "aws_s3_bucket" "file_bucket" {
   bucket = var.bucket_name
+}
 
-  # Adiciona uma regra de ciclo de vida para esvaziar o bucket antes de excluir
-  lifecycle_rule {
-    enabled = true
-    prefix  = "/"
+resource "aws_s3_bucket_lifecycle_configuration" "file_bucket_lifecycle" {
+  bucket = aws_s3_bucket.file_bucket.bucket
+
+  rule {
+    id     = "expire-objects"
+    status = "Enabled"
 
     expiration {
       days = 1
