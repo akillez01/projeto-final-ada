@@ -304,4 +304,4 @@ Conclusão
 Este projeto demonstra como automatizar a criação e destruição de infraestrutura na AWS usando Terraform e GitHub Actions. Siga os passos descritos neste README para configurar e gerenciar sua infraestrutura de forma eficiente.
 
 
-Este README fornece uma visão geral completa do projeto, incluindo a configuração do Terraform, GitHub Actions e os passos para aplicar e destruir a infraestrutura. Se precisar de mais alguma coisa, estou aqui para ajudar!
+Este README fornece uma visão geral completa do projeto, incluindo a configuração do Terraform, GitHub Actions e os passos para aplicar e destruir a infraestrutura.
