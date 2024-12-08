@@ -1,13 +1,13 @@
 # Variáveis para as credenciais da AWS
 variable "aws_access_key" {
-  description = "AWS Access Key"
   type        = string
+  description = "AWS Access Key"
   sensitive   = true
 }
 
 variable "aws_secret_key" {
-  description = "AWS Secret Access Key"
   type        = string
+  description = "AWS Secret Key"
   sensitive   = true
 }
 
@@ -46,3 +46,4 @@ variable "vpc_id" {
   description = "ID do VPC"
   type        = string
 }
+
