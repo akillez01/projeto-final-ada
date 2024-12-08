@@ -19,15 +19,10 @@ variable "bucket_name" {
 }
 
 # Variáveis para outros recursos
-variable "region" {
-  description = "Região da AWS"
-  type        = string
-  default     = "us-east-1"
-}
-
 variable "aws_region" {
   description = "AWS Region"
   type        = string
+  default     = "us-east-1"
 }
 
 variable "db_adacontab" {
