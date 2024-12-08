@@ -1,12 +1,12 @@
 resource "aws_s3_bucket" "file_bucket" {
-  bucket = var.bucket_name
+  bucket = "ada-contabilidade-storage-${random_id.bucket_suffix.hex}"
 
   lifecycle {
     ignore_changes = [bucket]
   }
 
   tags = {
-    Name        = "My bucket"
+    Name        = "ada-contabilidade-storage-${random_id.bucket_suffix.hex}"
     Environment = "Dev"
   }
 }
@@ -43,8 +43,5 @@ resource "aws_s3_bucket_lifecycle_configuration" "file_bucket_lifecycle" {
 resource "aws_s3_object" "lambda_code" {
   bucket = aws_s3_bucket.file_bucket.id
   key    = "lambda/arquivolambda.zip"
-  source = "${path.module}/arquivolambda.zip"
-  acl    = "private"
+  source = "/home/achilles/Área de Trabalho/projeto-final-ada/app/arquivolambda.zip"
 }
-
-

@@ -18,8 +18,12 @@ variable "aws_region" {
 variable "bucket_name" {
   description = "Nome do bucket S3"
   type        = string
-  default     = "ada-contabilidade-storage"
 }
+
+resource "random_id" "bucket_suffix" {
+  byte_length = 4
+}
+
 
 variable "db_adacontab" {
   description = "Nome do banco de dados RDS"
@@ -37,8 +41,7 @@ variable "db_password" {
   type        = string
   sensitive   = true
 }
-
 variable "vpc_id" {
-  description = "ID do VPC"
+  description = "The ID of the VPC where the security group will be created"
   type        = string
 }
