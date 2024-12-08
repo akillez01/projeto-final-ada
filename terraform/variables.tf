@@ -42,6 +42,22 @@ variable "db_password" {
   sensitive   = true
 }
 
+variable "TF_VAR_DB_USERNAME" {
+  description = "Usuário do banco de dados RDS"
+  type        = string
+  
+}
+
+variable "TF_VAR_DB_PASSWORD" {
+  description = "Senha do banco de dados RDS"
+  type        = string
+  sensitive   = true
+  
+}
+
+
+
+
 # Garantir que a variável db_username tenha um valor padrão para evitar erro
 # variable "db_username" {
 #   description = "Usuário do banco de dados RDS"
