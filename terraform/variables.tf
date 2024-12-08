@@ -41,3 +41,10 @@ variable "db_password" {
   type        = string
   sensitive   = true
 }
+
+# Garantir que a variável db_username tenha um valor padrão para evitar erro
+variable "db_username" {
+  description = "Usuário do banco de dados RDS"
+  type        = string
+  default     = "admin" # Adicionado valor padrão
+}
