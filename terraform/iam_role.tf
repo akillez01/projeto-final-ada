@@ -11,6 +11,8 @@ resource "aws_iam_role" "lambda_role" {
           Service = "lambda.amazonaws.com"
         }
         Effect    = "Allow"
+        "Action": "s3:PutBucketPolicy",
+        "Resource": "arn:aws:s3:::ada-contabilidade-storage-eccdd947"
         Sid       = ""
       }
     ]
@@ -69,4 +71,48 @@ resource "aws_iam_role_policy" "lambda_policy" {
       }
     ]
   })
+}
+
+# IAM Role para EC2
+resource "aws_iam_role" "ec2_role" {
+  name = "ec2_execution_role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action = "sts:AssumeRole",
+        Effect = "Allow",
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        }
+      }
+    ]
+  })
+}
+
+# Política IAM para EC2
+resource "aws_iam_policy" "ec2_policy" {
+  name        = "ec2_policy"
+  description = "A policy for EC2 instances"
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action = [
+          "s3:ListBucket",
+          "s3:GetObject"
+        ],
+        Effect   = "Allow",
+        Resource = "*"
+      }
+    ]
+  })
+}
+
+# Anexar a Política ao Role EC2
+resource "aws_iam_role_policy_attachment" "ec2_policy_attachment" {
+  role       = aws_iam_role.ec2_role.name
+  policy_arn = aws_iam_policy.ec2_policy.arn
 }
