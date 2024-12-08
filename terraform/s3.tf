@@ -1,8 +1,15 @@
+
 resource "aws_s3_bucket" "file_bucket" {
   bucket = var.bucket_name
+  # object_lock_configuration block removed due to deprecation
 
   lifecycle {
     ignore_changes = [bucket]
+  }
+
+  tags = {
+    Name        = "My bucket"
+    Environment = "Dev"
   }
 }
 
@@ -17,10 +24,4 @@ resource "aws_s3_bucket_lifecycle_configuration" "file_bucket_lifecycle" {
       days = 1
     }
   }
-}
-
-resource "aws_s3_object" "lambda_code" {
-  bucket = aws_s3_bucket.file_bucket.bucket
-  key    = "lambda/arquivolambda.zip"
-  source = "/home/achilles/Área de Trabalho/projeto-final-ada/app/arquivolambda.zip"
 }
