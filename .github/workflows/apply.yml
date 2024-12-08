@@ -6,11 +6,11 @@ on:
       - main
       - producao
       - teste
-  pull_request:
-    branches:
-      - main
-      - producao
-      - teste
+  # pull_request:
+  #   branches:
+  #     - main
+  #     - producao
+  #     - teste
 
 jobs:
   terraform:
