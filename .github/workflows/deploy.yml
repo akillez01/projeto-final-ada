@@ -34,4 +34,4 @@ jobs:
 
       - name: 'Run application - Uploader'
         working-directory: ./app
-        run: python uploader.py
+        run: python upload.py
