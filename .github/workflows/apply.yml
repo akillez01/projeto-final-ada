@@ -18,9 +18,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Baixar o repositório
       - name: 'Checkout repository'
         uses: actions/checkout@v2
 
+      # 2. Configurar o Python para criar o ZIP (opcional)
       - name: 'Set up Python'
         uses: actions/setup-python@v2
         with:
@@ -34,11 +36,13 @@ jobs:
         working-directory: ./app
         run: python upload_zip.py
 
+      # 3. Configurar Terraform
       - name: 'Set up Terraform'
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 1.0.11
 
+      # 4. Configurar Credenciais da AWS
       - name: 'Configure AWS Credentials'
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -46,10 +50,20 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
+      # 5. Inicializar Terraform
       - name: 'Terraform Init'
         working-directory: ./terraform
         run: terraform init
 
+      # 6. Importar recursos existentes (opcional, apenas para evitar recriação de recursos existentes)
+      - name: 'Terraform Import Resources'
+        working-directory: ./terraform
+        run: |
+          terraform import aws_dynamodb_table.file_metadata_table file_metadata || true
+          terraform import aws_iam_role.lambda_role lambda_execution_role || true
+          terraform import aws_s3_bucket.file_bucket ada-contabilidade-storage || true
+
+      # 7. Aplicar configurações do Terraform
       - name: 'Terraform Apply'
         working-directory: ./terraform
         env:
