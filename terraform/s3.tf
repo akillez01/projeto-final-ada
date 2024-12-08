@@ -2,6 +2,7 @@ resource "aws_s3_bucket" "file_bucket" {
   bucket = "ada-contabilidade-storage-${random_id.bucket_suffix.hex}"
 
   lifecycle {
+    prevent_destroy = true
     ignore_changes = [bucket]
   }
 
