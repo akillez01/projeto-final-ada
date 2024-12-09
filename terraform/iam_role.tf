@@ -15,6 +15,11 @@ resource "aws_iam_role" "lambda_exec" {
       }
     ]
   })
+
+  lifecycle {
+    prevent_destroy = true
+    ignore_changes  = [name]
+  }
 }
 
 resource "aws_iam_role_policy" "lambda_policy" {
@@ -36,12 +41,11 @@ resource "aws_iam_role_policy" "lambda_policy" {
       {
         Effect = "Allow"
         Action = [
-          "s3:GetObject",
-          "s3:PutObject"
+          "s3:PutObject",
+          "s3:GetObject"
         ]
         Resource = [
-          aws_s3_bucket.file_bucket.arn,                # Acesso ao bucket
-          "${aws_s3_bucket.file_bucket.arn}/*"          # Acesso aos objetos dentro do bucket
+          "${aws_s3_bucket.file_bucket.arn}/*"
         ]
       }
     ]
