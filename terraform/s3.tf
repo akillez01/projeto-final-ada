@@ -1,5 +1,3 @@
-# s3.tf
-
 resource "aws_s3_bucket" "file_bucket" {
   bucket = "ada-contabilidade-storage-${random_id.bucket_suffix.hex}"
 
@@ -9,6 +7,7 @@ resource "aws_s3_bucket" "file_bucket" {
   }
 
   lifecycle {
+    prevent_destroy = true
     ignore_changes  = [bucket]
   }
 }
@@ -33,7 +32,7 @@ resource "aws_s3_bucket_policy" "file_bucket_policy" {
       {
         Effect = "Allow"
         Principal = "*"
-        Action = "s3:GetObject"
+        Action = "s3:PutObject"
         Resource = "${aws_s3_bucket.file_bucket.arn}/*"
       }
     ]
