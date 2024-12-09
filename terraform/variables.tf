@@ -41,8 +41,3 @@ variable "db_password" {
   type        = string
   sensitive   = true
 }
-variable "vpc_id" {
-  description = "The ID of the VPC where the security group will be created"
-  type        = string
-  default     = "vpc-04796c0dfbd0e58c3"
-}
