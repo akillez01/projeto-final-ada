@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "file_bucket" {
-  bucket = "ada-contabilidade-storage-${random_id.bucket_suffix.hex}"
+  bucket = "ada-contabilidade-storage"  # Nome fixo para o bucket
 
   tags = {
     Name        = "ada-contabilidade-storage"
@@ -7,22 +7,27 @@ resource "aws_s3_bucket" "file_bucket" {
   }
 
   lifecycle {
-    prevent_destroy = true
-    ignore_changes  = [bucket]
+    # Remover ou setar prevent_destroy como false
+    prevent_destroy = false
   }
 }
 
+
+
+# Recurso de ACL para o bucket
 resource "aws_s3_bucket_acl" "file_bucket_acl" {
   bucket = aws_s3_bucket.file_bucket.bucket
   acl    = "private"
 }
 
+# Recurso para o arquivo no S3
 resource "aws_s3_object" "lambda_code" {
   bucket = aws_s3_bucket.file_bucket.id
   key    = "lambda/arquivolambda.zip"
   source = "/home/runner/work/projeto-final-ada/projeto-final-ada/app/arquivolambda.zip"
 }
 
+# Política para o bucket
 resource "aws_s3_bucket_policy" "file_bucket_policy" {
   bucket = aws_s3_bucket.file_bucket.id
 

@@ -20,11 +20,6 @@ variable "bucket_name" {
   type        = string
 }
 
-resource "random_id" "bucket_suffix" {
-  byte_length = 4
-}
-
-
 variable "db_adacontab" {
   description = "Nome do banco de dados RDS"
   type        = string
@@ -41,8 +36,9 @@ variable "db_password" {
   type        = string
   sensitive   = true
 }
+
 variable "vpc_id" {
   description = "The ID of the VPC where the security group will be created"
   type        = string
-  default     = "vpc-0b8596187149abeed"
+  default     = "vpc-05bd37ba528694518"
 }

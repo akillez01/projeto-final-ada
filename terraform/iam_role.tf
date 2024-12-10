@@ -1,3 +1,5 @@
+
+# Definindo o IAM Role para a Lambda
 resource "aws_iam_role" "lambda_exec" {
   name = "lambda_exec_role"
 
@@ -20,6 +22,7 @@ resource "aws_iam_role" "lambda_exec" {
   }
 }
 
+# Definindo a política de IAM para a Lambda
 resource "aws_iam_role_policy" "lambda_policy" {
   name = "lambda_policy"
   role = aws_iam_role.lambda_exec.id
@@ -43,7 +46,7 @@ resource "aws_iam_role_policy" "lambda_policy" {
           "s3:GetObject"
         ]
         Resource = [
-          "${aws_s3_bucket.file_bucket.arn}/*"
+          "${aws_s3_bucket.file_bucket.arn}/*"  # Referenciando o bucket corretamente
         ]
       }
     ]
